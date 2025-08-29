@@ -1,0 +1,12 @@
+# GRUPO  PACOTE         VERSÃO   URL
+BASE bash 5.2 https://ftp.gnu.org/gnu/bash/
+BASE gcc 13.2.0 https://ftp.gnu.org/gnu/gcc/gcc-13.2.0/
+BASE linux 6.9 https://cdn.kernel.org/pub/linux/kernel/v6.x/
+
+X11 xorg-server 21.1.8 https://www.x.org/releases/individual/xserver/
+X11 xorg-drivers 2024.02 https://www.x.org/releases/individual/driver/
+
+DESKTOP openbox 3.6.1 http://openbox.org/dist/openbox/
+DESKTOP i3 4.23 https://i3wm.org/downloads/
+
+EXTRAS vivaldi 6.1 https://downloads.vivaldi.com/stable/
