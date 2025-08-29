@@ -1,0 +1,131 @@
+====================================================================
+📖 TUTORIAL COMPLETO – USO DO SCRIPT check_updates.sh
+====================================================================
+
+1) O QUE É O SCRIPT
+-------------------
+O script check_updates.sh é uma ferramenta em shell para usuários de Linux From Scratch (LFS) ou sistemas derivados. 
+Ele serve para:
+
+- Verificar pacotes instalados e suas versões.
+- Comparar com a última versão disponível no site oficial.
+- Baixar automaticamente novas versões quando disponíveis.
+- Organizar os pacotes por grupos (BASE, X11, DESKTOP, EXTRAS, etc).
+- Gerar relatórios de atualização e manter um histórico.
+
+Ele NÃO substitui um gerenciador de pacotes (apt, pacman, dnf), mas dá um controle manual e transparente sobre atualizações.
+
+--------------------------------------------------------------------
+
+2) ESTRUTURA DE DIRETÓRIOS
+--------------------------
+Escolha um diretório onde ficará o repositório local, exemplo:
+
+    ~/lfs_repo/
+
+Dentro dele, o script e arquivos auxiliares ficarão assim:
+
+    ~/lfs_repo/
+     ├── check_updates.sh      # Script principal
+     ├── packages.txt          # Lista de pacotes e grupos
+     ├── update_report.txt     # Relatório da última execução
+     ├── history.log           # Histórico acumulado
+     └── updates/              # Pasta onde ficam os pacotes baixados
+         ├── BASE/
+         ├── X11/
+         ├── DESKTOP/
+         └── EXTRAS/
+
+Cada subpasta em "updates" será criada automaticamente para separar os pacotes conforme o grupo.
+
+--------------------------------------------------------------------
+
+3) ARQUIVO packages.txt
+-----------------------
+O script lê este arquivo para saber:
+- Nome do grupo (ex: BASE, X11, DESKTOP, EXTRAS)
+- Nome do pacote
+- Versão instalada
+- URL da página oficial onde ficam os pacotes
+
+Formato esperado (separado por espaços):
+
+    BASE bash 5.2 https://ftp.gnu.org/gnu/bash/
+    BASE gcc 13.2.0 https://ftp.gnu.org/gnu/gcc/gcc-13.2.0/
+    X11 xorg-server 21.1.8 https://www.x.org/releases/individual/xserver/
+    DESKTOP openbox 3.6.1 http://openbox.org/dist/openbox/
+    EXTRAS vivaldi 6.1 https://downloads.vivaldi.com/stable/
+
+- O primeiro campo é o grupo.
+- O segundo campo é o nome do pacote (como aparece no arquivo fonte).
+- O terceiro campo é a versão que você já instalou.
+- O quarto campo é a URL base onde o pacote pode ser encontrado.
+
+IMPORTANTE: use URLs que listem os arquivos de versão (diretórios oficiais de download).
+
+--------------------------------------------------------------------
+
+4) INSTALAÇÃO DO SCRIPT
+-----------------------
+1. Acesse sua pasta de repositório:
+
+    mkdir -p ~/lfs_repo
+    cd ~/lfs_repo
+
+2. Crie o arquivo do script:
+
+    nano check_updates.sh
+
+3. Cole o código do script (a versão completa com suporte a grupos, cores, logs e --list).
+
+4. Dê permissão de execução:
+
+    chmod +x check_updates.sh
+
+--------------------------------------------------------------------
+
+5) COMO USAR
+------------
+- Verificar TODOS os grupos e pacotes:
+
+    ./check_updates.sh
+
+- Verificar apenas um grupo (exemplo: BASE):
+
+    ./check_updates.sh BASE
+
+- Listar todos os grupos disponíveis no arquivo packages.txt:
+
+    ./check_updates.sh --list
+
+--------------------------------------------------------------------
+
+6) ARQUIVOS DE SAÍDA
+--------------------
+- update_report.txt → resumo da última execução (o que foi atualizado, o que já estava atualizado).
+- history.log → log acumulado com data/hora de cada atualização.
+- packages.txt → atualizado automaticamente com as novas versões baixadas.
+- updates/ → armazena os pacotes baixados, separados por grupo.
+
+--------------------------------------------------------------------
+
+7) BOAS PRÁTICAS
+----------------
+- Sempre rode o script MANUALMENTE para ter controle das versões.
+- Faça backup do seu packages.txt periodicamente.
+- Use --list para conferir grupos antes de filtrar.
+- Rode sem argumentos de vez em quando para não deixar nenhum grupo desatualizado.
+- Se quiser só verificar sem baixar, pode ser implementada uma flag --dry-run (simulação).
+
+--------------------------------------------------------------------
+
+8) RESUMO FINAL
+---------------
+- Você mantém o arquivo packages.txt como "fonte da verdade".
+- O script lê esse arquivo, baixa páginas oficiais, compara versões, baixa novos pacotes e atualiza tudo.
+- Controle 100% manual, sem depender de sistemas de pacotes automáticos.
+- Ideal para Linux From Scratch e sistemas que não usam pacotes binários prontos.
+
+====================================================================
+FIM DO TUTORIAL
+====================================================================
